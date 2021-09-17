@@ -2,7 +2,7 @@
 
 A command-line solver for the card game [Machiavelli](https://en.wikipedia.org/wiki/Machiavelli_(Italian_card_game)).
 
-# Install
+## Install
 
 Machiavelli is available on PyPI:
 
@@ -10,7 +10,7 @@ Machiavelli is available on PyPI:
 python3 -m pip install machiavelli
 ```
 
-# Usage
+## Usage
 
 This package provides a command line tool to solve the card game Machiavelli.
 The tool keeps track of the game state by prompting for cards drawn by you and cards played by anyone.
@@ -26,7 +26,85 @@ It will then tell you the "best" play (the play that uses the most cards from yo
 7. Go to step 3 and repeat until you empty your hand.
 8. Win.
 
+## Demo Game
 ```bash
-$ machiavelli
+$ machiavelli --pretty --emoji
+Enter starting hand: kh,jh,10d,7d,3c,4s,7s,3d,2c,6s	<- User input
+Enter other plays: 9c,8c,7c				<- User input
+Current game state: machiavelli 7c,8c,9c 2c,3c,3d,4s,
+6s,7s,7d,td,jh,kh
+
+### Before your play ###
+table: (7♣️ 8♣️ 9♣️)
+
+### Solve ###
+--- 10 left ---
+hand: 2♣️ 3♣️ 3♦️ 4♠️ 6♠️ 7♠️ 7♦️ 10♦️ J♥️ K♥️		<- Solver found no playable cards
+table: (7♣️ 8♣️ 9♣️)
+
+Enter drawn card(s) (or blank): jc			<- So draw one card
+Enter my last play (or blank):
+Enter other plays:					<- Other players only drew cards
+Current game state: machiavelli 7c,8c,9c 2c,3c,3d,4s,
+6s,7s,7d,td,jc,jh,kh
+
+### Before your play ###
+table: (7♣️ 8♣️ 9♣️)
+
+### Solve ###
+--- 11 left ---
+hand: 2♣️ 3♣️ 3♦️ 4♠️ 6♠️ 7♠️ 7♦️ 10♦️ J♣️ J♥️ K♥️		<- Still no playable cards
+table: (7♣️ 8♣️ 9♣️)
+
+Enter drawn card(s) (or blank): ac			<- So draw another card
+Enter my last play (or blank):
+Enter other plays:
+Current game state: machiavelli 7c,8c,9c 1c,2c,3c,3d,
+4s,6s,7s,7d,td,jc,jh,kh
+
+### Before your play ###
+table: (7♣️ 8♣️ 9♣️)
+
+### Solve ###
+--- 9 left ---
+hand: 3♦️ 4♠️ 6♠️ 7♠️ 7♦️ 10♦️ J♣️ J♥️ K♥️
+                                -- use: A♣️ 2♣️ 3♣️	<- Solver found playable cards
+table: (A♣️ 2♣️ 3♣️) (7♣️ 8♣️ 9♣️)			<- This is a valid play of
+							   the cards on the table
+Enter drawn card(s) (or blank):
+Enter my last play (or "best"=1c,2c,3c): best
+Enter other plays:
+Current game state: machiavelli 1c,2c,3c,7c,8c,9c 3d,	<- (You can restart with these
+4s,6s,7s,7d,td,jc,jh,kh					    arguments to restore game state)
+
 ...
+...
+...
+
+Current game state: machiavelli 1c,1d,1d,1h,2s,2c,2d,
+2d,2h,3s,3c,3d,3h,4s,4s,4c,4d,4h,5s,5c,5d,5h,6s,6c,6d,
+6d,6h,7s,7s,7c,7c,7d,7d,7h,8s,8s,8c,8d,8d,8h,8h,9s,9s,
+9c,9d,9h,ts,ts,tc,tc,td,th,th,js,js,jc,jc,jd,jd,jh,jh,
+qs,qd,qh,ks,ks,kc,kh kh
+
+### Before your play ###
+table: (A♣️ A♦️ A♥️) (2♣️ 2♦️ 2♥️) (10♠️ 10♣️ 10♥️)
+(J♠️ J♣️ J♦️ J♥️) (K♠️ K♣️ K♥️) (A♦️ 2♦️ 3♦️ 4♦️ 5♦️
+6♦️ 7♦️ 8♦️ 9♦️ 10♦️ J♦️ Q♦️) (2♠️ 3♠️ 4♠️) (3♣️ 4♣️
+5♣️ 6♣️ 7♣️) (3♥️ 4♥️ 5♥️ 6♥️ 7♥️ 8♥️) (4♠️ 5♠️ 6♠️
+7♠️ 8♠️ 9♠️) (6♦️ 7♦️ 8♦️) (7♠️ 8♠️ 9♠️ 10♠️ J♠️ Q♠️
+K♠️) (7♣️ 8♣️ 9♣️ 10♣️ J♣️) (8♥️ 9♥️ 10♥️ J♥️ Q♥️)
+
+### Solve ###
+--- 0 left ---
+hand: WIN -- use: K♥️					<- Solver found a winning play!
+table: (A♣️ A♦️ A♥️) (2♣️ 2♦️ 2♥️) (7♠️ 7♣️ 7♦️) (8♠️
+8♦️ 8♥️) (10♠️ 10♣️ 10♥️) (J♠️ J♣️ J♦️ J♥️) (K♠️ K♣️
+K♥️) (A♦️ 2♦️ 3♦️ 4♦️ 5♦️ 6♦️) (2♠️ 3♠️ 4♠️) (3♣️ 4♣️
+5♣️ 6♣️ 7♣️ 8♣️ 9♣️ 10♣️ J♣️) (3♥️ 4♥️ 5♥️ 6♥️ 7♥️ 8♥️
+9♥️ 10♥️ J♥️ Q♥️ K♥️) (4♠️ 5♠️ 6♠️ 7♠️ 8♠️ 9♠️) (6♦️
+7♦️ 8♦️ 9♦️ 10♦️ J♦️ Q♦️) (9♠️ 10♠️ J♠️ Q♠️ K♠️)
+
+Enter drawn card(s) (or blank): ^D
+Quit
 ```
