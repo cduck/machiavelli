@@ -2,6 +2,15 @@
 
 A command-line solver for the card game [Machiavelli](https://en.wikipedia.org/wiki/Machiavelli_(Italian_card_game)).
 
+In Machiavelli, cards are played and arranged in groups on the table.
+You either draw one card or play any number of cards from your hand.
+The only constraint is that at the end of your turn, all the cards on the table are grouped in valid sets or sequences of at least three each.
+See the [complete rules here](https://en.wikipedia.org/wiki/Machiavelli_(Italian_card_game)).
+
+Machiavelli is particularly nice to solve with a computer because the only game state that matters is the list of cards on the table and in your hand.
+A valid grouping of cards can simply be recomputed from scratch with a [CSP](https://en.wikipedia.org/wiki/Constraint_satisfaction_problem) solver on each turn.
+This solver translates the rules and objective of the game into an [integer program](https://en.wikipedia.org/wiki/Integer_programming) and uses [CVXPY](https://www.cvxpy.org/) to find the best move in a fraction of a second.
+
 ## Install
 
 Machiavelli is available on PyPI:
@@ -108,3 +117,6 @@ K♥️) (A♦️ 2♦️ 3♦️ 4♦️ 5♦️ 6♦️) (2♠️ 3♠️ 4♠
 Enter drawn card(s) (or blank): ^D
 Quit
 ```
+
+## Acknowledgements
+Thanks to [Konstantinos Ameranis](https://github.com/kameranis) for help formulating the integer program and thanks to Konstantinos, Kevin, and Kunal for extensive play-testing and debugging.
